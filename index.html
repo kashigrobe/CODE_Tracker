@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODE Studies | Kashi Grobe - BME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #fdf2f4;
+            --bg-secondary: #fff5f7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #fff0f3;
+            --bg-elevated: #ffeef1;
+            --accent-primary: #e8a4b8;
+            --accent-secondary: #d4849a;
+            --accent-tertiary: #c9a4c5;
+            --accent-gold: #d4a574;
+            --accent-success: #a8d4a8;
+            --accent-warning: #e8c4a4;
+            --accent-danger: #e8a4a4;
+            --text-primary: #5c4a52;
+            --text-secondary: #8b7380;
+            --text-muted: #b8a4ac;
+            --border-subtle: rgba(232, 164, 184, 0.2);
+            --border-medium: rgba(232, 164, 184, 0.4);
+            --shadow-soft: 0 4px 20px rgba(212, 132, 154, 0.1);
+            --shadow-medium: 0 8px 30px rgba(212, 132, 154, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Decorative background */
+        .bg-decoration {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .circle-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+            top: -200px; right: -100px;
+        }
+
+        .circle-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, var(--accent-tertiary) 0%, transparent 70%);
+            bottom: -100px; left: -100px;
+        }
+
+        .circle-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.15;
+        }
+
+        .app {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 280px 1fr 340px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-subtle);
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(232, 164, 184, 0.3);
+        }
+
+        .logo-text { 
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600; 
+            font-size: 20px; 
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .student-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .student-avatar {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            border-radius: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(232, 164, 184, 0.25);
+        }
+
+        .student-name { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px; 
+            font-weight: 600; 
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        
+        .student-program {
+            font-size: 11px;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .student-gpa {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .gpa-sidebar-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .gpa-sidebar-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .student-progress {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--bg-elevated);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        .progress-percent {
+            font-size: 11px;
+            color: var(--accent-secondary);
+            margin-top: 8px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .nav-section { margin-bottom: 28px; }
+        
+        .nav-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            padding-left: 12px;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover { 
+            background: var(--bg-card); 
+            color: var(--text-primary);
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .nav-item.active { 
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(232, 164, 184, 0.3);
+        }
+        
+        .nav-icon { width: 18px; height: 18px; opacity: 0.8; }
+        
+        .nav-badge {
+            margin-left: auto;
+            font-size: 11px;
+            padding: 3px 10px;
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .nav-item.active .nav-badge {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+        /* Main Content */
+        .main { padding: 32px 40px; overflow-y: auto; }
+        
+        .page-header { margin-bottom: 32px; }
+        
+        .page-title { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px; 
+            font-weight: 600; 
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .page-subtitle { color: var(--text-secondary); font-size: 15px; }
+
+        .search-container {
+            position: relative;
+            margin-top: 20px;
+            max-width: 400px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 44px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(232, 164, 184, 0.2);
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: var(--bg-elevated);
+            border-radius: 50%;
+            color: var(--text-muted);
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .search-clear:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .search-clear.visible {
+            display: flex;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .no-results-text {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .no-results-hint {
+            font-size: 14px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(232, 164, 184, 0.3), rgba(212, 132, 154, 0.3));
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        .semester-tabs { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+        
+        .semester-tab {
+            font-size: 13px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .semester-tab:hover { 
+            border-color: var(--accent-primary); 
+            color: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+        
+        .semester-tab.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-color: transparent;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(232, 164, 184, 0.3);
+        }
+
+        .semester-section { margin-bottom: 48px; }
+        
+        .semester-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        
+        .semester-title { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px; 
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .semester-credits {
+            font-size: 12px;
+            padding: 6px 14px;
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+        
+        .semester-line { 
+            flex: 1; 
+            height: 1px; 
+            background: linear-gradient(90deg, var(--border-subtle), transparent);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* Course Card */
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--accent-primary);
+        }
+
+        .course-card.expanded { grid-column: 1 / -1; }
+
+        .course-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        
+        .course-code {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .course-ects {
+            font-size: 10px;
+            padding: 3px 8px;
+            background: var(--bg-elevated);
+            border-radius: 10px;
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+        
+        .course-name { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px; 
+            font-weight: 600; 
+            color: var(--text-primary); 
+            line-height: 1.4;
+        }
+
+        .course-name-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .course-name-link:hover .course-name {
+            color: var(--accent-secondary);
+        }
+
+        .course-name-link:hover .link-icon {
+            transform: translate(2px, -2px);
+            background: var(--accent-secondary);
+        }
+
+        .link-icon {
+            width: 24px;
+            height: 24px;
+            padding: 5px;
+            color: white;
+            background: var(--accent-primary);
+            border-radius: 8px;
+            opacity: 1;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(232, 164, 184, 0.4);
+        }
+
+        .grade-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .grade-badge {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 14px;
+            min-width: 56px;
+            text-align: center;
+        }
+
+        .level-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .grade-1-0 { background: linear-gradient(135deg, #d4edda, #c3e6cb); color: #28a745; }
+        .grade-1-3, .grade-1-7 { background: linear-gradient(135deg, var(--bg-elevated), #fde4e8); color: var(--accent-secondary); }
+        .grade-2-0 { background: linear-gradient(135deg, #fff3cd, #ffeeba); color: #b8860b; }
+        .grade-passed { background: linear-gradient(135deg, #d4edda, #c3e6cb); color: #28a745; font-size: 14px; }
+        .grade-failed { background: linear-gradient(135deg, #f8d7da, #f5c6cb); color: #dc3545; font-size: 14px; }
+
+        .course-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .meta-left { display: flex; align-items: center; gap: 10px; }
+        .meta-right { display: flex; align-items: center; gap: 10px; }
+
+        .course-type {
+            font-size: 10px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .type-mandatory { background: linear-gradient(135deg, #e8d4f0, #dcc4e8); color: #8b5a9c; }
+        .type-compulsory { background: linear-gradient(135deg, #fde4e8, #f8d4dc); color: var(--accent-secondary); }
+        .type-elective { background: linear-gradient(135deg, #d4e8f0, #c4dce8); color: #5a8b9c; }
+        .type-sts { background: linear-gradient(135deg, #f0e8d4, #e8dcc4); color: #9c8b5a; }
+        .type-orientation { background: linear-gradient(135deg, #d4f0e8, #c4e8dc); color: #5a9c8b; }
+
+        .course-prof {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .course-prof svg { width: 14px; height: 14px; opacity: 0.6; }
+
+        .feedback-btn {
+            font-size: 10px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-gold), #c9946a);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+        }
+        
+        .feedback-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+        }
+        
+        .feedback-btn.active {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+        }
+
+        .feedback-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            border-left: 4px solid var(--accent-gold);
+            display: none;
+        }
+        
+        .feedback-section.visible {
+            display: block;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-label {
+            font-size: 10px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .feedback-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* Right Panel */
+        .panel {
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-subtle);
+            padding: 32px 24px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .panel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .panel-title {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .gpa-container { text-align: center; padding: 20px 0; }
+        
+        .gpa-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        
+        .gpa-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .grade-breakdown { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
+        
+        .grade-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        
+        .grade-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-excellent { background: linear-gradient(135deg, #a8d4a8, #8bc48b); }
+        .dot-good { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
+        .dot-average { background: linear-gradient(135deg, var(--accent-warning), #d4b494); }
+        .dot-failed { background: linear-gradient(135deg, var(--accent-danger), #d48484); }
+        
+        .grade-label { flex: 1; font-size: 13px; color: var(--text-secondary); }
+        .grade-count { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: var(--text-primary); }
+
+        .total-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        
+        .stat-box { 
+            background: var(--bg-elevated); 
+            border-radius: 16px; 
+            padding: 16px; 
+            text-align: center;
+        }
+        
+        .stat-value { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px; 
+            font-weight: 700; 
+            color: var(--text-primary);
+        }
+        
+        .stat-label { 
+            font-size: 10px; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .ects-item { margin-bottom: 18px; }
+        .ects-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .ects-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+        .ects-value { font-size: 12px; color: var(--text-primary); font-weight: 600; }
+        .ects-bar { height: 8px; background: var(--bg-elevated); border-radius: 4px; overflow: hidden; }
+        .ects-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+        
+        .fill-primary { background: linear-gradient(90deg, var(--accent-primary), #d494a8); }
+        .fill-secondary { background: linear-gradient(90deg, var(--accent-tertiary), #b494b8); }
+        .fill-success { background: linear-gradient(90deg, var(--accent-success), #94c494); }
+        .fill-warning { background: linear-gradient(90deg, var(--accent-gold), #c4a484); }
+        .fill-tertiary { background: linear-gradient(90deg, var(--accent-secondary), #c47494); }
+
+        .ects-total {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .ects-total-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .ects-total-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .ects-total-bar {
+            height: 12px;
+            background: var(--bg-elevated);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .ects-total-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary), var(--accent-gold));
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+
+        .ects-remaining {
+            font-size: 12px;
+            color: var(--accent-secondary);
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .date-item { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--border-subtle); 
+        }
+        .date-item:last-child { border-bottom: none; }
+        .date-label { font-size: 12px; color: var(--text-secondary); }
+        .date-value { font-size: 12px; color: var(--accent-secondary); font-weight: 600; }
+
+        @media (max-width: 1400px) {
+            .app { grid-template-columns: 260px 1fr; }
+            .panel { display: none; }
+        }
+        @media (max-width: 900px) {
+            .app { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .main { padding: 20px; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-elevated); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+                <span class="logo-text">CODE Berlin</span>
+            </div>
+            <div class="student-card">
+                <div class="student-avatar">KG</div>
+                <div class="student-name">Kashi Grobe</div>
+                <div class="student-program">Bachelor of Management & Entrepreneurship</div>
+                <div class="student-gpa">
+                    <div class="gpa-sidebar-label">Current GPA</div>
+                    <div class="gpa-sidebar-value" id="sidebar-gpa">1.40</div>
+                </div>
+                <div class="student-progress">
+                    <div class="progress-header">
+                        <span class="progress-label">Total ECTS</span>
+                        <span class="progress-value"><span id="sidebar-passed-ects">0</span> / 180</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="sidebar-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-percent"><span id="sidebar-remaining">0</span> ECTS remaining</div>
+                </div>
+            </div>
+            <nav class="nav-section">
+                <div class="nav-label">Overview</div>
+                <div class="nav-item active" data-view="all">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    All Modules
+                    <span class="nav-badge" id="total-modules">28</span>
+                </div>
+                <div class="nav-item" data-view="passed">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Passed
+                    <span class="nav-badge" id="passed-count">27</span>
+                </div>
+                <div class="nav-item" data-view="failed">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Failed
+                    <span class="nav-badge" id="failed-count">1</span>
+                </div>
+            </nav>
+            <nav class="nav-section">
+                <div class="nav-label">Module Types</div>
+                <div class="nav-item" data-filter="mandatory">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    Mandatory
+                </div>
+                <div class="nav-item" data-filter="compulsory">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Compulsory Elective
+                </div>
+                <div class="nav-item" data-filter="elective">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                    Elective
+                </div>
+                <div class="nav-item" data-filter="sts">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    STS
+                </div>
+                <div class="nav-item" data-filter="orientation">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Orientation
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="page-header">
+                <h1 class="page-title">My Studies</h1>
+                <p class="page-subtitle">Track your academic progress across all semesters</p>
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search modules, professors, codes...">
+                    <button class="search-clear" id="search-clear" onclick="clearSearch()">×</button>
+                </div>
+            </div>
+            <div class="semester-tabs">
+                <button class="semester-tab active" data-semester="all">All Semesters</button>
+                <button class="semester-tab" data-semester="fall-2025">Fall 2025</button>
+                <button class="semester-tab" data-semester="spring-2025">Spring 2025</button>
+                <button class="semester-tab" data-semester="fall-2024">Fall 2024</button>
+            </div>
+            <div id="courses-container"></div>
+        </main>
+
+        <aside class="panel">
+            <div class="panel-card">
+                <div class="panel-title">Grade Average</div>
+                <div class="gpa-container">
+                    <div class="gpa-value" id="gpa-display">1.40</div>
+                    <div class="gpa-label">Current GPA</div>
+                </div>
+                <div class="grade-breakdown">
+                    <div class="grade-row"><div class="grade-dot dot-excellent"></div><span class="grade-label">Level 3 (1.0)</span><span class="grade-count" id="count-1-0">0</span></div>
+                    <div class="grade-row"><div class="grade-dot dot-good"></div><span class="grade-label">Level 2 (1.3 - 1.7)</span><span class="grade-count" id="count-level2">0</span></div>
+                    <div class="grade-row"><div class="grade-dot dot-average"></div><span class="grade-label">Level 1 (2.0 - 2.3)</span><span class="grade-count" id="count-level1">0</span></div>
+                    <div class="grade-row"><div class="grade-dot dot-failed"></div><span class="grade-label">Failed (5.0)</span><span class="grade-count" id="count-failed">0</span></div>
+                </div>
+                <div class="total-stats">
+                    <div class="stat-box"><div class="stat-value" id="total-ects">155</div><div class="stat-label">Total ECTS</div></div>
+                    <div class="stat-box"><div class="stat-value" id="passed-ects">145</div><div class="stat-label">Passed ECTS</div></div>
+                </div>
+            </div>
+            <div class="panel-card">
+                <div class="panel-title">ECTS Progress</div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">Orientation Semester</span><span class="ects-value"><span id="ects-orientation">0</span> / 24</span></div><div class="ects-bar"><div class="ects-fill fill-success" id="bar-orientation" style="width: 0%"></div></div></div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">Mandatory Modules</span><span class="ects-value"><span id="ects-mandatory">0</span> / 20</span></div><div class="ects-bar"><div class="ects-fill fill-secondary" id="bar-mandatory" style="width: 0%"></div></div></div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">Compulsory Electives</span><span class="ects-value"><span id="ects-compulsory">0</span> / 30</span></div><div class="ects-bar"><div class="ects-fill fill-tertiary" id="bar-compulsory" style="width: 0%"></div></div></div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">Elective Modules</span><span class="ects-value"><span id="ects-elective">0</span> / 50</span></div><div class="ects-bar"><div class="ects-fill fill-primary" id="bar-elective" style="width: 0%"></div></div></div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">STS Modules</span><span class="ects-value"><span id="ects-sts">0</span> / 26</span></div><div class="ects-bar"><div class="ects-fill fill-warning" id="bar-sts" style="width: 0%"></div></div></div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">Thesis</span><span class="ects-value">0 / 15</span></div><div class="ects-bar"><div class="ects-fill fill-primary" style="width: 0%"></div></div></div>
+                <div class="ects-item"><div class="ects-header"><span class="ects-label">Capstone Project</span><span class="ects-value">0 / 15</span></div><div class="ects-bar"><div class="ects-fill fill-primary" style="width: 0%"></div></div></div>
+                <div class="ects-total">
+                    <div class="ects-total-label">Total Progress</div>
+                    <div class="ects-total-value"><span id="panel-passed-ects">0</span> / 180 ECTS</div>
+                    <div class="ects-total-bar"><div class="ects-total-fill" id="panel-progress-bar" style="width: 0%"></div></div>
+                    <div class="ects-remaining"><span id="panel-remaining">0</span> ECTS to graduate</div>
+                </div>
+            </div>
+            <div class="panel-card">
+                <div class="panel-title">Important Dates</div>
+                <div class="date-item"><span class="date-label">Re-assessment Registration</span><span class="date-value">12.01.26</span></div>
+                <div class="date-item"><span class="date-label">Re-assessment Start</span><span class="date-value">26.01.26</span></div>
+                <div class="date-item"><span class="date-label">Re-assessment End</span><span class="date-value">30.01.26</span></div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const courses = [
+            // Fall 2025
+            { code: 'BM_28', name: 'Leadership', semester: 'fall-2025', grade: '1.0', ects: 10, professor: 'Rosanna Sibora', type: 'compulsory', status: 'passed', feedback: `You recognized very well the nature of human-centered leadership. Great references to theory as a foundation of your reflection. I love your examples of leadership experiences, also from private life. Your learning "people follow not the loudest voice, but the one who understands them and can bring clarity without taking away their dignity" shows me that you know more about leadership than some CEOs. Love this quote! Amazing essay. I'm not surprised at all though. Thank you for being such an active student during the lectures.` },
+            { code: 'BM_25', name: 'Product Strategy and Decision Making', semester: 'fall-2025', grade: '1.0', ects: 10, professor: 'Roland Fassauer', type: 'compulsory', status: 'passed', feedback: `Professional and well structured, I like the detailed revenue + financial models and the real time decision dashboard with key metrics.` },
+            { code: 'BM_03', name: 'Business Intelligence and Analytics', semester: 'fall-2025', grade: '2.0', ects: 5, professor: 'Nofar Zeidenshnir', type: 'mandatory', status: 'passed', feedback: `Your composite indicators show genuine analytical thinking beyond basic reporting, and your GDPR-driven tool choice reflects professional maturity. The visualizations are functional but basic for the rich dataset you had. For the future: You could show trends, correlations, geographic comparisons. You showed a solid foundation to build on.` },
+            { code: 'BM_09', name: 'Strategic Partnerships & Third-Party Integration', semester: 'fall-2025', grade: '1.7', ects: 5, professor: 'Ceren Ahiska', type: 'elective', status: 'passed', feedback: `The student demonstrated broad knowledge and reflection across the topics covered by the module. She actively attended the lectures and reviewed the module materials. Her work reflects a broad approach to strategic partnerships, touching on multiple relevant areas, and includes a press release as part of the submission. To level up, a more structured presentation of the content would be highly beneficial.` },
+            { code: 'BM_21', name: 'Communication and Stakeholder Management', semester: 'fall-2025', grade: '1.3', ects: 10, professor: 'Martin Funck', type: 'compulsory', status: 'passed', feedback: `Thank you for your essay. Quite simply: this is one of the strongest reflection essays I've seen in the past two years. Your work demonstrates an exceptional level of engagement with the course content, depth of reflection, and clarity in application. I genuinely hope you consider putting in the additional effort for a Level 3 extension. Stakeholder Management: Very well applied and reflected. Storytelling: Also very strong. Pitching: Excellent work. Visual Presentation: Well done. Public Speaking: Well described. You clearly demonstrate a strong learning mindset.` },
+            { code: 'BM_11', name: 'Consumer Psychology', semester: 'fall-2025', grade: '1.3', ects: 5, professor: 'Julia Hamblin-Trué', type: 'mandatory', status: 'passed', feedback: `Thank you for your submission. It was genuinely a pleasure to read. Your work shows both broad understanding across the module and clear expertise in ethical digital design and framing. You don't just describe these concepts, you also explain why ethical transparency matters for user trust and decision-quality. This shows the kind of in-depth application and reflection that Level 2 requires, which is why I assess your hand-in at a high Level 2 (1.3). To move into Level 3, the work would need to show exceptional expertise and creativity in one topic.` },
+            { code: 'DS_27', name: 'Storytelling through Video', semester: 'fall-2025', grade: '1.3', ects: 10, professor: 'Ian Hutchinson', type: 'elective', status: 'passed', feedback: `Thank you for submitting not one, but two films for your work portfolio. It was great to see the growth in all skills between the two films. The 1st film, Logic, was a little hard to follow but creating a film from concept to edit in 48 hours is very impressive. Child's Play is a clear step up in every way. This film simply works. It is confidently shot, directed, acted and edited. The film is well crafted and you have excellent command of filmic language. Level 2+. Thank you for the great work and your input during class was incredibly invaluable for everyone.` },
+            { code: 'STS_05', name: 'Judging Technology', semester: 'fall-2025', grade: '1.0', ects: 5, professor: 'Denis Schulz', type: 'sts', status: 'passed', feedback: `Your answer to the first question was truly outstanding. You were clearly very familiar with Couldry & Mejias and their concept of data colonisation. You described it in detail, from connections to colonialism and capitalism to Marx to the 4 Es. Your second answer was also very good. Your last answer was again exceptional. One of the best assessment performances I have ever seen, truly outstanding, congratulations! Grade: 1.0 (Level 3)` },
+            { code: 'BM_24', name: 'Agile Ways of Working', semester: 'fall-2025', grade: '1.7', ects: 10, professor: 'Luis Huegel', type: 'compulsory', status: 'passed', feedback: `Thanks for your presentation and being part of the module this semester. Your presentation was easy to follow and your mission & vision were very strong. Also your personas worked out well, I think you captured the pain points very well. Your breadboard was also very detailed. Well done Kashi and best of luck with your company!` },
+
+            // Spring 2025
+            { code: 'BM_22', name: 'Product Discovery', semester: 'spring-2025', grade: '1.3', ects: 10, professor: 'Swantje Quoos', type: 'compulsory', status: 'passed', feedback: `Very well-written documentation of your Product Discovery for the AI Learning toy 'Nilo' including a good variety of examples for all five Knowledge Areas. You invested a huge amount of time to do an in-depth problem exploration and user research. Kudos to you! One highlight is your iterative process to evaluate different solutions based on clearly defined criteria. You demonstrate the ability to look at a topic from different perspectives while reflecting on your work. All the best for your next semester!` },
+            { code: 'BM_26', name: 'Business and Financial Models', semester: 'spring-2025', grade: '1.3', ects: 10, professor: 'Nofar Zeidenshnir', type: 'mandatory', status: 'passed', feedback: `Feedback for each part can be found at the dedicated Google Classrooms.` },
+            { code: 'BM_18', name: 'Data Science and AI for Product Innovation', semester: 'spring-2025', grade: '1.3', ects: 5, professor: 'Florian Grote', type: 'elective', status: 'passed', feedback: `Very good overview and discussion of all the steps you took creating the Nilo prototype with your team. You have been a dedicated and very reflective driver of this project. For the value question, it would have been interesting to also compare the results from the tiny edge LLM with GPT 4.5. In any case, very good deep-dive and reflection.` },
+            { code: 'SE_56', name: 'Software Engineering Specialty', semester: 'spring-2025', grade: '1.7', ects: 10, professor: 'Samuel Boguslawski', type: 'elective', status: 'passed', feedback: `Team Feedback: I like the playful introduction of your product idea and prototype with a short video. Clearly defined individual goals. The group managed successfully to split into two smaller, interdisciplinary groups. Individual Feedback: Your reflection demonstrates that you are able to clearly identify the shortcomings of your collaboration. Define clear roles and tasks for each team member. All the best for your next semester!` },
+            { code: 'SE_06', name: 'Software Engineering', semester: 'spring-2025', grade: '1.7', ects: 5, professor: 'Adam Roe', type: 'elective', status: 'passed', feedback: '' },
+            { code: 'BM_27', name: 'Teamwork and Collaboration', semester: 'spring-2025', grade: '2.0', ects: 10, professor: 'Martin Funck', type: 'compulsory', status: 'passed', feedback: `Thank you for your strong and well-crafted essay. You reached Level 1 with a solid grade of 2.0. Your essay was carefully designed, illustrative, and supported by good examples and visuals. Your handling of feedback was very strong throughout. Overall, a well-structured and reflective essay. By digging one layer deeper into personal dynamics, you can continue to strengthen your reflections and leadership skills.` },
+            { code: 'DS_06', name: 'Design Methods I', semester: 'spring-2025', grade: 'Passed', ects: 5, professor: 'Pras Gunasekera', type: 'elective', status: 'passed', feedback: `You give a clear direction to your research investigation through a research question about CODE's admissions and assessments. Good work on your interview guide, moving from potential problems to imagining better scenarios. You took a fitting approach to analysis of interview data. Your insights are backed up with participant quotes which is good. Keep up the reflective practice.` },
+            { code: 'DS_25', name: 'Design Methods II', semester: 'spring-2025', grade: '1.0', ects: 10, professor: 'Pras Gunasekera', type: 'elective', status: 'passed', feedback: '' },
+            { code: 'DS_20', name: 'Service Design', semester: 'spring-2025', grade: '1.0', ects: 5, professor: 'Lara Piccolo', type: 'elective', status: 'passed', feedback: `Kashi, it was a pleasure to read about your journey throughout this process. I truly enjoyed learning more about your participation and the outcomes of the Lego workshop. This is extremely rich material, which you could certainly transform into an academic publication if you wish. Your team's dedication was remarkable! By making your work publicly available in an international competition, you have met the criteria for Level 3. Congratulations!` },
+            { code: 'STS_03', name: 'Research', semester: 'spring-2025', grade: '1.7', ects: 5, professor: 'Daniel Lehmann', type: 'sts', status: 'passed', feedback: `See my Slack message.` },
+            { code: 'BM_23', name: 'Product Marketing and Sales', semester: 'spring-2025', grade: 'Failed', ects: 10, professor: 'Roland Fassauer', type: 'compulsory', status: 'failed', feedback: `No hand-in submitted.` },
+
+            // Fall 2024
+            { code: 'OS_01', name: 'Introduction to Software Engineering', semester: 'fall-2024', grade: 'Passed', ects: 5, professor: 'Frank Trollmann', type: 'orientation', status: 'passed', feedback: `Kashi has participated in and passed the OS_01 assessment. Well done Kashi, you did pretty well in most tasks. The only topic I want to encourage you to revisit is error handling as you seemed to have had some trouble with Task 6.` },
+            { code: 'OS_02', name: 'Introduction to Design', semester: 'fall-2024', grade: 'Passed', ects: 5, professor: 'Pras Gunasekera', type: 'orientation', status: 'passed', feedback: `Group poster feedback: Good start on PESTLE approach. I did like your group's dynamism in presentation approach. Individual reflection feedback: Kashi, it is positive to read about your experience of primary research debunking initial assumptions - this is the power and point of it. Remember we need better things, not more things. You are bang on about design being iterative. Keep up the reflective practice.` },
+            { code: 'OS_03', name: 'Introduction to Business Management & Entrepreneurship', semester: 'fall-2024', grade: 'Passed', ects: 5, professor: 'Swantje Quoos', type: 'orientation', status: 'passed', feedback: `Very well done. Thank you for your openness to share both the challenges, frustrations and the results from your project work. You highlight the importance of starting with a problem and building an understanding for the users instead of right away falling for a product idea: This is a very important insight. Great reflection: You demonstrate the ability to take different perspectives. All the best for your future at CODE!` },
+            { code: 'OS_05', name: 'Application of Project-Based Learning Methods', semester: 'fall-2024', grade: 'Passed', ects: 9, professor: 'Pras Gunasekera', type: 'orientation', status: 'passed', feedback: `Understanding of Content: Good reflection on why the original idea would not have worked. Kudos for doing the research phase a second time for your new idea. Excellent use of the Persona concept. Communication and Presentation: Amazing visualization with a small exhibition demonstrating love for detail. Creativity and Innovation: Very creative and aesthetic selection of artifacts. Highly innovative group. Reflection and Evaluation: Demonstrated ability to reflect about own development.` },
+            { code: 'STS_01', name: 'STS Essentials', semester: 'fall-2024', grade: '1.3', ects: 6, professor: 'Jonatan Palmblad', type: 'sts', status: 'passed', feedback: `Thank you for your interesting essay on ethics and politics. I like your point that the three types of ethics we have discussed are complementary: they all highlight something and we do not have to commit to one type—indeed, that might blind us from critical aspects of moral judgment. Well done! And good luck with your future studies at CODE!` },
+            { code: 'STS_04', name: 'Presentation', semester: 'fall-2024', grade: '1.0', ects: 5, professor: 'Fabian Geier', type: 'sts', status: 'passed', feedback: `Thank you, Kashi, for your excellent presentation on Hollywood, Filmmaking and the History of Film and its Future about AI. Also thank you for being in this course, and always inspiring me and the whole course with your great expertise and bringing new perspectives to the discussions.` },
+            { code: 'ID_30', name: 'Artificial Intelligence in Design', semester: 'fall-2024', grade: '2.0', ects: 10, professor: 'Daniel Buzzo', type: 'elective', status: 'passed', feedback: `You have created a complex and personal project with a number of interlinked elements. You have seriously considered the scenario and scope of use and also crafted something that is elegant and has a strong aesthetic presence. The addition of a working prototype is a strong achievement for a personal project. Overall this is a great first project in this area and I look forward to seeing where you take it next.` },
+            { code: 'BM_16', name: 'How to Start a Startup', semester: 'fall-2024', grade: '2.0', ects: 5, professor: 'Chris Schmidt', type: 'mandatory', status: 'passed', feedback: `Kashi - thank you for participating this semester. Next steps: Real external pitches, real customer interviews, real customer sales, real angels once you've shown traction, and a real legal structure that protects you and others.` },
+        ];
+
+        const semesters = ['fall-2025', 'spring-2025', 'fall-2024'];
+        const semesterNames = { 'fall-2025': 'Fall 2025', 'spring-2025': 'Spring 2025', 'fall-2024': 'Fall 2024' };
+
+        function renderCourses(filter = {}) {
+            const container = document.getElementById('courses-container');
+            let filteredCourses = [...courses];
+
+            if (filter.semester && filter.semester !== 'all') {
+                filteredCourses = filteredCourses.filter(c => c.semester === filter.semester);
+            }
+            if (filter.type) {
+                filteredCourses = filteredCourses.filter(c => c.type === filter.type);
+            }
+            if (filter.status) {
+                filteredCourses = filteredCourses.filter(c => c.status === filter.status);
+            }
+
+            let html = '';
+            semesters.forEach(semester => {
+                const semesterCourses = filteredCourses.filter(c => c.semester === semester);
+                if (semesterCourses.length === 0) return;
+                const semesterEcts = semesterCourses.reduce((sum, c) => sum + c.ects, 0);
+
+                html += `<section class="semester-section" data-semester="${semester}">
+                    <div class="semester-header">
+                        <h2 class="semester-title">${semesterNames[semester]}</h2>
+                        <span class="semester-credits">${semesterEcts} ECTS</span>
+                        <div class="semester-line"></div>
+                    </div>
+                    <div class="courses-grid">
+                        ${semesterCourses.map((course, idx) => renderCourseCard(course, semester + '-' + idx)).join('')}
+                    </div>
+                </section>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderCourseCard(course, id) {
+            const gradeClass = course.grade === '1.0' ? 'grade-1-0' : 
+                              (course.grade === '1.3' || course.grade === '1.7') ? 'grade-1-3' : 
+                              (course.grade === '2.0' || course.grade === '2.3') ? 'grade-2-0' : 
+                              course.grade === 'Passed' ? 'grade-passed' : 
+                              course.grade === 'Failed' ? 'grade-failed' : '';
+            const typeClass = 'type-' + course.type;
+            const typeName = course.type.charAt(0).toUpperCase() + course.type.slice(1);
+            
+            // Determine level and display
+            let displayGrade, levelText;
+            if (course.grade === 'Passed') {
+                displayGrade = '✓';
+                levelText = '';
+            } else if (course.grade === 'Failed') {
+                displayGrade = '✗';
+                levelText = 'Fail';
+            } else {
+                const gradeNum = parseFloat(course.grade);
+                displayGrade = course.grade;
+                if (gradeNum === 1.0) levelText = 'Level 3';
+                else if (gradeNum >= 1.3 && gradeNum <= 1.7) levelText = 'Level 2';
+                else if (gradeNum >= 2.0 && gradeNum <= 2.3) levelText = 'Level 1';
+                else if (gradeNum >= 2.7 && gradeNum <= 4.0) levelText = 'Level 0';
+                else levelText = '';
+            }
+            
+            const hasFeedback = course.feedback && course.feedback.trim().length > 0;
+            const moduleUrl = `https://app.code.berlin/module/${course.code}?table=description`;
+
+            return `<div class="course-card" id="card-${id}">
+                <div class="course-top">
+                    <div>
+                        <div class="course-code">
+                            ${course.code}
+                            <span class="course-ects">${course.ects} ECTS</span>
+                        </div>
+                        <a href="${moduleUrl}" target="_blank" class="course-name-link">
+                            <span class="course-name">${course.name}</span>
+                            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="grade-container">
+                        <div class="grade-badge ${gradeClass}">${displayGrade}</div>
+                        ${levelText ? `<div class="level-label">${levelText}</div>` : ''}
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div class="meta-left">
+                        <span class="course-type ${typeClass}">${typeName}</span>
+                    </div>
+                    <div class="meta-right">
+                        <span class="course-prof">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            ${course.professor}
+                        </span>
+                        ${hasFeedback ? `<button class="feedback-btn" id="btn-${id}" onclick="toggleFeedback('${id}')">Feedback</button>` : ''}
+                    </div>
+                </div>
+                ${hasFeedback ? `<div class="feedback-section" id="feedback-${id}">
+                    <div class="feedback-label">✨ Professor Feedback</div>
+                    <div class="feedback-text">${course.feedback}</div>
+                </div>` : ''}
+            </div>`;
+        }
+
+        function toggleFeedback(id) {
+            const feedbackSection = document.getElementById('feedback-' + id);
+            const btn = document.getElementById('btn-' + id);
+            const card = document.getElementById('card-' + id);
+            
+            if (feedbackSection && btn && card) {
+                feedbackSection.classList.toggle('visible');
+                btn.classList.toggle('active');
+                card.classList.toggle('expanded');
+            }
+        }
+
+        // Search functionality
+        let currentFilter = {};
+        
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            const clearBtn = document.getElementById('search-clear');
+            
+            if (query.length > 0) {
+                clearBtn.classList.add('visible');
+                searchCourses(query);
+            } else {
+                clearBtn.classList.remove('visible');
+                renderCourses(currentFilter);
+            }
+        });
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-clear').classList.remove('visible');
+            renderCourses(currentFilter);
+        }
+
+        function searchCourses(query) {
+            const container = document.getElementById('courses-container');
+            const lowerQuery = query.toLowerCase();
+            
+            const matchedCourses = courses.filter(c => 
+                c.name.toLowerCase().includes(lowerQuery) ||
+                c.code.toLowerCase().includes(lowerQuery) ||
+                c.professor.toLowerCase().includes(lowerQuery) ||
+                c.type.toLowerCase().includes(lowerQuery) ||
+                c.grade.toLowerCase().includes(lowerQuery)
+            );
+
+            if (matchedCourses.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <div class="no-results-text">No modules found for "${query}"</div>
+                        <div class="no-results-hint">Try searching by module name, code, or professor</div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `<div class="semester-section">
+                <div class="semester-header">
+                    <h2 class="semester-title">Search Results</h2>
+                    <span class="semester-credits">${matchedCourses.length} module${matchedCourses.length > 1 ? 's' : ''} found</span>
+                    <div class="semester-line"></div>
+                </div>
+                <div class="courses-grid">
+                    ${matchedCourses.map((course, idx) => renderCourseCard(course, 'search-' + idx)).join('')}
+                </div>
+            </div>`;
+            
+            container.innerHTML = html;
+        }
+
+        // Event listeners
+        document.querySelectorAll('.semester-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.semester-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = { semester: tab.dataset.semester };
+                clearSearch();
+                renderCourses(currentFilter);
+            });
+        });
+
+        document.querySelectorAll('.nav-item[data-filter]').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                currentFilter = { type: item.dataset.filter };
+                clearSearch();
+                renderCourses(currentFilter);
+            });
+        });
+
+        document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (item.dataset.view === 'all') currentFilter = {};
+                else if (item.dataset.view === 'passed') currentFilter = { status: 'passed' };
+                else if (item.dataset.view === 'failed') currentFilter = { status: 'failed' };
+                clearSearch();
+                renderCourses(currentFilter);
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => { 
+            renderCourses({}); 
+            calculateECTS();
+        });
+
+        function calculateECTS() {
+            const passedCourses = courses.filter(c => c.status === 'passed');
+            
+            const orientation = passedCourses.filter(c => c.type === 'orientation').reduce((sum, c) => sum + c.ects, 0);
+            const mandatory = passedCourses.filter(c => c.type === 'mandatory').reduce((sum, c) => sum + c.ects, 0);
+            const compulsory = passedCourses.filter(c => c.type === 'compulsory').reduce((sum, c) => sum + c.ects, 0);
+            const elective = passedCourses.filter(c => c.type === 'elective').reduce((sum, c) => sum + c.ects, 0);
+            const sts = passedCourses.filter(c => c.type === 'sts').reduce((sum, c) => sum + c.ects, 0);
+            
+            const totalPassed = passedCourses.reduce((sum, c) => sum + c.ects, 0);
+            const remaining = 180 - totalPassed;
+            const percent = Math.round((totalPassed / 180) * 100);
+
+            document.getElementById('sidebar-passed-ects').textContent = totalPassed;
+            document.getElementById('sidebar-remaining').textContent = remaining;
+            document.getElementById('sidebar-progress-bar').style.width = percent + '%';
+
+            document.getElementById('ects-orientation').textContent = orientation;
+            document.getElementById('bar-orientation').style.width = Math.min(100, (orientation / 24) * 100) + '%';
+            
+            document.getElementById('ects-mandatory').textContent = mandatory;
+            document.getElementById('bar-mandatory').style.width = Math.min(100, (mandatory / 20) * 100) + '%';
+            
+            document.getElementById('ects-compulsory').textContent = compulsory;
+            document.getElementById('bar-compulsory').style.width = Math.min(100, (compulsory / 30) * 100) + '%';
+            
+            document.getElementById('ects-elective').textContent = elective;
+            document.getElementById('bar-elective').style.width = Math.min(100, (elective / 50) * 100) + '%';
+            
+            document.getElementById('ects-sts').textContent = sts;
+            document.getElementById('bar-sts').style.width = Math.min(100, (sts / 26) * 100) + '%';
+
+            document.getElementById('panel-passed-ects').textContent = totalPassed;
+            document.getElementById('panel-remaining').textContent = remaining;
+            document.getElementById('panel-progress-bar').style.width = percent + '%';
+
+            document.getElementById('total-ects').textContent = totalPassed;
+            document.getElementById('passed-ects').textContent = totalPassed;
+
+            // Calculate GPA (only graded courses)
+            const gradedCourses = passedCourses.filter(c => !isNaN(parseFloat(c.grade)));
+            let totalWeightedGrade = 0;
+            let totalGradedEcts = 0;
+            
+            gradedCourses.forEach(c => {
+                totalWeightedGrade += parseFloat(c.grade) * c.ects;
+                totalGradedEcts += c.ects;
+            });
+            
+            const gpa = totalGradedEcts > 0 ? (totalWeightedGrade / totalGradedEcts).toFixed(2) : 'N/A';
+            document.getElementById('gpa-display').textContent = gpa;
+            document.getElementById('sidebar-gpa').textContent = gpa;
+
+            // Count by level
+            const level3 = gradedCourses.filter(c => parseFloat(c.grade) === 1.0).length;
+            const level2 = gradedCourses.filter(c => parseFloat(c.grade) >= 1.3 && parseFloat(c.grade) <= 1.7).length;
+            const level1 = gradedCourses.filter(c => parseFloat(c.grade) >= 2.0 && parseFloat(c.grade) <= 2.3).length;
+            const failed = courses.filter(c => c.status === 'failed').length;
+
+            document.getElementById('count-1-0').textContent = level3;
+            document.getElementById('count-level2').textContent = level2;
+            document.getElementById('count-level1').textContent = level1;
+            document.getElementById('count-failed').textContent = failed;
+        }
+    </script>
+</body>
+</html>
