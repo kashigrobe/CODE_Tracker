@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -844,6 +844,80 @@
             .app { grid-template-columns: 1fr; }
             .sidebar { display: none; }
             .main { padding: 20px; }
+            .mobile-header { display: block; }
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .mobile-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .mobile-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+
+        .mobile-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .mobile-program {
+            font-size: 11px;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .mobile-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .mobile-stat-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-top: 4px;
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -928,6 +1002,31 @@
         </aside>
 
         <main class="main">
+            <!-- Mobile Header - Only shows on small screens -->
+            <div class="mobile-header">
+                <div class="mobile-profile">
+                    <div class="mobile-avatar">KG</div>
+                    <div class="mobile-info">
+                        <div class="mobile-name">Kashi Grobe</div>
+                        <div class="mobile-program">BME</div>
+                    </div>
+                </div>
+                <div class="mobile-stats">
+                    <div class="mobile-stat">
+                        <div class="mobile-stat-value" id="mobile-gpa">1.43</div>
+                        <div class="mobile-stat-label">GPA</div>
+                    </div>
+                    <div class="mobile-stat">
+                        <div class="mobile-stat-value"><span id="mobile-ects">195</span>/180</div>
+                        <div class="mobile-stat-label">ECTS</div>
+                    </div>
+                    <div class="mobile-stat">
+                        <div class="mobile-stat-value" id="mobile-passed">27</div>
+                        <div class="mobile-stat-label">Passed</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="page-header">
                 <h1 class="page-title">My Studies</h1>
                 <p class="page-subtitle">Track your academic progress across all semesters</p>
@@ -1309,6 +1408,11 @@
             document.getElementById('count-level2').textContent = level2;
             document.getElementById('count-level1').textContent = level1;
             document.getElementById('count-failed').textContent = failed;
+
+            // Update mobile stats
+            document.getElementById('mobile-gpa').textContent = gpa;
+            document.getElementById('mobile-ects').textContent = totalPassed;
+            document.getElementById('mobile-passed').textContent = passedCourses.length;
         }
     </script>
 </body>
